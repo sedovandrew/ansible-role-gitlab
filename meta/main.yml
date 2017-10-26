@@ -3,6 +3,12 @@ galaxy_info:
   description: GitLab configuration
   license: BSD
   min_ansible_version: 1.2
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+
   galaxy_tags: []
 
 dependencies:
