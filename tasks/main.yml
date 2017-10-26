@@ -1,0 +1,18 @@
+---
+- name: Create dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ gitlab_volume_config }}"
+    - "{{ gitlab_volume_logs }}"
+    - "{{ gitlab_volume_data }}"
+
+- name: Create docker-compose.yml
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "/srv/gitlab/docker-compose.yml"
+
+- name: Run GitLab
+  docker_service:
+    project_src: "/srv/gitlab/"
