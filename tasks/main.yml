@@ -16,3 +16,29 @@
 - name: Run GitLab
   docker_service:
     project_src: "/srv/gitlab/"
+    scale:
+      runner: "{{ gitlab_runner_count }}"
+
+- name: Check registration
+  shell: >
+    docker exec gitlab_runner_{{ item }}
+    gitlab-runner list 2>&1 | grep gitlab_runner_{{ item }} >/dev/null; echo $?
+  register: gitlab_runner_registered
+  changed_when: false
+  with_sequence: start=1 end="{{ gitlab_runner_count }}"
+
+- name: Register GitLab Runner
+  shell: >
+    docker exec gitlab_runner_{{ item.item }}
+    gitlab-runner register
+    --tag-list linux,xenial,ubuntu,docker
+    --run-untagged
+    --non-interactive
+    --registration-token {{ gitlab_token }}
+    --name gitlab_runner_{{ item.item }}
+    --executor docker
+    --docker-image alpine:latest
+    --url {{ gitlab_external_url }}
+  when: gitlab_token is defined
+  when: item.stdout == "1"
+  with_items: "{{ gitlab_runner_registered.results }}"

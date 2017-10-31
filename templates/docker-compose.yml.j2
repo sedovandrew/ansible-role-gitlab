@@ -13,3 +13,10 @@ web:
     - '{{ gitlab_volume_config }}:/etc/gitlab'
     - '{{ gitlab_volume_logs }}:/var/log/gitlab'
     - '{{ gitlab_volume_data }}:/var/opt/gitlab'
+
+runner:
+  image: 'gitlab/gitlab-runner:{{ gitlab_runner_image_version }}'
+  restart: always
+  volumes:
+    - '{{ gitlab_runner_volume_config }}:/etc/gitlab-runner'
+    - '/var/run/docker.sock:/var/run/docker.sock'

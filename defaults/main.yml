@@ -5,3 +5,7 @@ gitlab_port_ssh: 2222
 gitlab_volume_config: "/srv/gitlab/config"
 gitlab_volume_logs: "/srv/gitlab/logs"
 gitlab_volume_data: "/srv/gitlab/data"
+
+gitlab_runner_volume_config: "/srv/gitlab-runner/config"
+gitlab_runner_image_version: "latest"
+gitlab_runner_count: 1
