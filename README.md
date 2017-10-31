@@ -74,6 +74,19 @@ Ansible roles:
 Example Playbook
 ----------------
 
+First start (without `gitlab_token`):
+
+```yaml
+- hosts: servers
+  roles:
+    - role: gitlab
+      gitlab_external_url: http://10.10.10.10
+      gitlab_hostname: "gitlab.example.com"
+      gitlab_runner_count: 3
+```
+
+Second start (with `gitlab_token`):
+
 ```yaml
 - hosts: servers
   roles:
